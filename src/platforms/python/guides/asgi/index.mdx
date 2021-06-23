@@ -17,12 +17,19 @@ from sentry_sdk.integrations.asgi import SentryAsgiMiddleware
 
 from myapp import asgi_app
 
-sentry_sdk.init(dsn="___PUBLIC_DSN___")
+sentry_sdk.init(dsn="___PUBLIC_DSN___") #don't forget to adjust the traces_sample_rate parameter in production
 
-asgi_app = SentryAsgiMiddleware(asgi_app)
+asgi_app = SentryAsgiMiddleware(asgi_app) # For FastAPI use the method below
+
+# For FastAPI or other starlet based apps do this instead:
+asgi_app.add_middleware(SentryAsgiMiddleware)
+
 ```
 
 The middleware supports both ASGI 2 and ASGI 3 transparently.
+
+
+
 
 ## Behavior
 
